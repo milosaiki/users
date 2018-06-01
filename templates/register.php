@@ -1,10 +1,10 @@
 <?php include_once 'header.php'; ?>
 
-  <div class="registration-page container">
+  <div class="registration-page container text-center">
     <div class="title">
       <h1>Registration</h1>
     </div>
-    <div class="registration-form">
+    <div class="registration-form col-lg-6 col-md-6 col-sm-12 col-xs-12 offset-lg-3 offset-md-3">
       <form action="/save" method="post" id="registrationForm">
         <div class="form-group">
           <label for="name">Name: </label>
