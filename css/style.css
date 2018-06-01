@@ -1,0 +1,21 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.navigation {
+  border-bottom: 1px solid black;
+}
+
+.navigation ul li {
+  list-style: none;
+}
