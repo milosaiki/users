@@ -4,6 +4,12 @@
     <div class="title">
       <h1>Registration</h1>
     </div>
+    <?php if (isset($this->error)) { ?>
+      <div class="alert alert-danger">
+        <h3 class="danger"><?php echo $this->error; ?></h3>
+      </div>
+      <?php 
+    } ?>
     <div class="registration-form col-lg-6 col-md-6 col-sm-12 col-xs-12 offset-lg-3 offset-md-3">
       <form action="/save" method="post" id="registrationForm">
         <div class="form-group">

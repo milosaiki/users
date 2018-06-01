@@ -53,8 +53,8 @@ class UserController extends Controller {
         $this->view->render('register.php');
       }
     } else {
-      $this->view->error = 'userExist';
-      $this->view_>render('register.php');
+      $this->view->error = 'Email address taken';
+      $this->view->render('register.php');
     }
     
   }
