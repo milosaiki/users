@@ -23,3 +23,7 @@ a:hover {
 .error {
   color: red;
 }
+
+.login-form {
+  margin-top: 50px;
+}
