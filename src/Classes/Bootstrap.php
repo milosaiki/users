@@ -17,7 +17,8 @@ class Bootstrap
     'register'        => 'user_register',
     'search'          => 'user_search',
     'save'            => 'user_save',
-    'log-in'          => 'user_log'
+    'log-in'          => 'user_log',
+    'logout'          => 'user_logout'
   ];
 
   public function __construct($request)

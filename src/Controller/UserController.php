@@ -59,6 +59,12 @@ class UserController extends Controller {
     
   }
 
+  public function logoutAction () {
+    unset($_COOKIE['user']);
+
+    $this->view->render('index.php');
+  }
+
   public function logAction() 
   {
     $email = $this->request->postParam('email');
