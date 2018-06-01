@@ -2,7 +2,7 @@
   <div class="brand">
     <a href="/">Users</a>
   </div>
-  <div class="menu">
+  <div class="menu container">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
       <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
