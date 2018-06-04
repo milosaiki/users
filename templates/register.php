@@ -1,6 +1,6 @@
 <?php include_once 'header.php'; ?>
 
-  <div class="registration-page container text-center">
+  <div class="registration-page container text-center content">
     <div class="title">
       <h1>Registration</h1>
     </div>

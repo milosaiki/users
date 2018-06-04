@@ -13,12 +13,13 @@ class Bootstrap
 
   private $routes = [
     '/'               => 'user_index',
-    'login'           => 'user_login',
+    'user'            => 'user_user',
     'register'        => 'user_register',
     'search'          => 'user_search',
     'save'            => 'user_save',
     'log-in'          => 'user_log',
-    'logout'          => 'user_logout'
+    'logout'          => 'user_logout',
+    'update'          => 'user_update'
   ];
 
   public function __construct($request)

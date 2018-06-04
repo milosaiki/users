@@ -1,8 +1,9 @@
 <?php include_once 'header.php'; ?>
 
-  <div class="container text-center">
+  <div class="container text-center content">
     <?php if(isset($this->user)) { ?>
       <h1>Welcome <?php echo $this->user['name']; ?></h1>
+      <?php include_once('user_data.php'); ?>
     <?php } else { ?>
       <?php if(isset($this->error)) { ?>
       <div class="alert alert-danger">

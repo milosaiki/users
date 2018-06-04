@@ -2,20 +2,22 @@
 
 namespace Site\Classes;
 
+use Site\Classes\Session;
+
 class Request 
 {
 
   private $post;
   private $get;
-  private $session;
   private $server;
+  private $session;
 
-  public function __construct($post = [], $get = [], $session = [], $server = [])
+  public function __construct($post = [], $get = [], $server = [])
   {
     $this->post = $post;
     $this->get = $get;
-    $this->session = $session;
     $this->server = $server;
+    $this->session = new Session();
   }
 
   public function query()
@@ -48,16 +50,16 @@ class Request
     return isset($this->post[$key]) ? $this->post[$key] : $default;
   }
 
-  public function sessionParam($key, $default = '') {
-    return isset($this->session[$key]) ? $this->session[$key] : $default;
+  public function getSessionParam($key, $default = null) {
+    return ($this->session->get($key)) ? $this->session->get($key) : $default;
   }
 
   public function setSessionParam($key, $value) {
-    $this->session[$key] = $value;
+    $this->session->set($key, $value);
   }
 
   public function unsetSessionParam($key) {
-    unset($this->session[$key]);
+    $this->session->remove($key);
   }
 
 }

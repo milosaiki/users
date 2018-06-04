@@ -14,6 +14,7 @@ a:hover {
 
 .navigation {
   border-bottom: 1px solid black;
+  height: 60px;
 }
 
 .navigation ul li {
@@ -26,4 +27,57 @@ a:hover {
 
 .login-form {
   margin-top: 50px;
+}
+
+.menu {
+  position: relative;
+}
+
+.menu ul {
+  position: absolute;
+  right: 0;
+}
+
+.content {
+  margin-top: 50px;
+}
+
+.action-holder {
+  margin-bottom: 20px;
+}
+
+.action-holder a {
+  margin: 0 10px;
+}
+
+.none {
+  display: none;
+}
+
+.search-term {
+  margin-bottom: 20px;
+}
+
+.open-submenu-btn {
+  font-size: 24px;
+  margin: 0 10px;
+  color: #c1c1c1;
+}
+
+.submenu {
+  position: absolute !important;
+  right: 235px !important;
+  top: 50px;
+  padding: 0;
+  border: 1px solid #f8f9fa;
+  background: #f8f9fa;
+  z-index:1;
+}
+
+.submenu li {
+  margin: 10px 40px;
+}
+
+h3 a {
+  color: #b3b3b3;
 }

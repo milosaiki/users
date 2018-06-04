@@ -14,6 +14,6 @@ class View
 
   public function redirect($uri)
   {
-    header("Location: /" . $uri);
+    $uri == '/' ? header("Location: /") : header("Location: /" . $uri);
   }
 }

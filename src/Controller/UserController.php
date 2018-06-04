@@ -5,6 +5,7 @@ namespace Site\Controller;
 use Site\Controller\Controller;
 use Site\Classes\PDOConnection;
 use Site\Entity\User;
+use Site\Classes\Session;
 
 class UserController extends Controller {
 
@@ -16,6 +17,11 @@ class UserController extends Controller {
 
   public function indexAction() 
   {
+    $user = $this->request->getSessionParam('user');
+
+    if ($user) {
+      $this->view->user = $user;
+    }
 
     $this->view->render('index.php');
   }
@@ -25,8 +31,13 @@ class UserController extends Controller {
     $this->view->render('register.php');
   }
 
-  public function loginAction() 
+  public function userAction() 
   {
+    $user = $this->request->getSessionParam('user');
+    if ($user) {
+      $this->view->user = $user;
+    }
+
     $this->view->render('user.php');
   }
 
@@ -47,7 +58,7 @@ class UserController extends Controller {
       $res = $User->save($this->db);
 
       if ($res) {
-        $this->view->redirect('login');
+        $this->view->redirect('user');
       } else {
         $this->view->error = true;
         $this->view->render('register.php');
@@ -60,9 +71,9 @@ class UserController extends Controller {
   }
 
   public function logoutAction () {
-    unset($_COOKIE['user']);
+    $this->request->unsetSessionParam('user');
 
-    $this->view->render('index.php');
+    $this->view->redirect('/');
   }
 
   public function logAction() 
@@ -77,24 +88,25 @@ class UserController extends Controller {
       $this->view->render('user.php');
     } else {
 
-      setcookie('user', $User['name'], time() + (86400 * 30));
-    
-      $this->view->user = $User;
-      $this->view->render('user.php');
+      $this->request->setSessionParam('user', $User);
+
+      $this->view->redirect('user');
     }
     
   }
 
   public function searchAction() {
+    $user = $this->request->getSessionParam('user');
     $search = $this->request->getParam('search');
 
-    if (!isset($_COOKIE['user'])) {
+    if (!isset($user)) {
       $this->view->error = 'Please log in to use search';
       $this->view->render('user.php');
     } else {
 
       $results = $this->search($search);
 
+      $this->view->search = $search;
       $this->view->results = $results;
       $this->view->render('search.php');
     }
@@ -107,7 +119,6 @@ class UserController extends Controller {
     $stmt->execute();
 
     $data = $stmt->fetch();
-
 
     if ($password != $data['password']) {
       return false;
@@ -139,6 +150,30 @@ class UserController extends Controller {
     } 
 
     return $result;
+  }
+
+  public function updateAction() {
+    $name = $this->request->postParam('name');
+    $email = $this->request->postParam('email');
+    $password = md5($this->request->postParam('password'));
+    $id = $this->request->postParam('userId');
+
+    $this->updateUser($name, $email, $password, $id);
+    $this->request->unsetSessionParam('user');
+    $this->request->setSessionParam('user', ['id' => $id, 'name' => $name, 'email' => $email, 'password' => $password]);
+
+    $this->view->redirect('user');
+    
+  }
+
+  private function updateUser($name, $email, $password, $id) {
+    $sql = 'UPDATE user SET `name` = :username, email = :email, `password` = :userpassword WHERE id = :id';
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindParam(':username', $name);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':userpassword', $password);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
   }
 
 }

@@ -1,5 +1,8 @@
 <?php include_once 'header.php'; ?>
-  <div class="container">
+  <div class="container content">
+    <div class="text-center search-term">
+      <h2>Search: <?php echo $this->search; ?></h2>
+    </div>
     <table class="table">
       <thead>
         <th scope="col">Id</th>
@@ -16,7 +19,6 @@
         <?php } ?>
       </tbody>
     </table>
-  </div>
-  
+  </div>  
 
 <?php include_once 'footer.php'; ?>
