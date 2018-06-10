@@ -11,11 +11,11 @@ class Controller
   protected $request;
   protected $db;
 
-  public function __construct($request, $connection)
+  public function __construct($request, $db)
   {
     $this->view = new View();
     $this->request = $request;
-    $this->db = new \PDO('mysql:host=127.0.0.1;dbname=users', 'root', '');
+    $this->db = $db->getConnection();
   }
 
   

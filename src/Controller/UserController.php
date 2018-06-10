@@ -3,27 +3,28 @@
 namespace Site\Controller;
 
 use Site\Controller\Controller;
-use Site\Classes\PDOConnection;
 use Site\Entity\User;
 use Site\Classes\Session;
+use Site\HelperFunction;
 
 class UserController extends Controller {
 
-  public function __construct($request)
+  public function __construct($request, $db)
   {
-    $db = PDOConnection::instance();
-    parent::__construct($request, $db->getConnection());
+    parent::__construct($request, $db);
   }
 
   public function indexAction() 
   {
+    $args = [];
     $user = $this->request->getSessionParam('user');
 
     if ($user) {
-      $this->view->user = $user;
+      $args['user'] = $user;
+      //$this->view->user = $user;
     }
-
-    $this->view->render('index.php');
+    
+    $this->view->render('index.php', $args);
   }
 
   public function registerAction() 
@@ -44,9 +45,9 @@ class UserController extends Controller {
   public function saveAction()
   {
     
-    $name = $this->request->postParam('name');
-    $email = $this->request->postParam('email');
-    $password = $this->request->postParam('password');
+    $name = HelperFunction::validateField($this->request->postParam('name'));
+    $email = HelperFunction::validateField($this->request->postParam('email'));
+    $password = HelperFunction::validateField($this->request->postParam('password'));
     $user = $this->user($email);
 
     if (!$user) {
@@ -78,21 +79,25 @@ class UserController extends Controller {
 
   public function logAction() 
   {
-    $email = $this->request->postParam('email');
-    $password = md5($this->request->postParam('password'));
+    $args = [];
+    $email = HelperFunction::validateField($this->request->postParam('email'));
+    $isValidEmail = HelperFunction::isEmail($email);
+
+    $password = HelperFunction::validateField($this->request->postParam('password'));
+    $password = md5($password);
 
     $User = $this->selectUser($email, $password);
     
-    if ($User === false) {
+    if (!$User) {
       $this->view->error = 'Wrong email or password';
-      $this->view->render('user.php');
+      $args['success'] = -1;
     } else {
-
       $this->request->setSessionParam('user', $User);
-
-      $this->view->redirect('user');
+      $args['success'] = 1;
     }
-    
+    echo json_encode($args);
+    die();
+    //return json_encode($args);
   }
 
   public function searchAction() {

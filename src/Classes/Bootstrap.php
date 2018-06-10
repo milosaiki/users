@@ -22,14 +22,15 @@ class Bootstrap
     'update'          => 'user_update'
   ];
 
-  public function __construct($request)
+  public function __construct($request, $db)
   {
     $uri = empty( $request->getParam(Config::URL_PARAM) ) ? '/' : $request->getParam(Config::URL_PARAM);
     foreach ( $this->routes as $key => $value ) {
       if ( preg_match("#^$key$#", $uri) ) {
         $uriParams = explode('_', $value);
         $this->action = $uriParams[1];
-				$this->controller = new UserController($request);
+        $controllerClass = '\\Site\\Controller\\' . ucfirst($uriParams[0]) . 'Controller';
+				$this->controller = new $controllerClass($request, $db);
         $split = explode('/', $uri);
         $param = isset($split[1]) ? $split[1] : $split[0];
         if ( isset($split[2]) ) {

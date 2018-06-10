@@ -6,20 +6,20 @@
     <a href="/">Users</a>
   </div>
   <div class="menu container">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>            
+    <ul class="">
+      <li class=""><a class="nav-link" href="/register">Register</a></li>            
       <?php if (!isset($_SESSION['user'])) { ?>
-        <li class="nav-item"><a class="nav-link" href="/user">Login</a></li>
+        <li class=""><a class="nav-link" href="/user" id="loginBtn">Login</a></li>
       <?php 
       } else { ?>
-          <li class="nav-item">
+          <li class="">
             <a href="#" id="openSubmenuBtn" class="open-submenu-btn"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
             <ul class="submenu none">
-              <li>
-                <a class="nav-link" href="/user">Profile</a>
+              <li class="submenu-list-item">
+                <a class="" href="/user">Profile</a>
               </li>
-              <li>
-                <a class="nav-link" href="/logout">Logout</a>
+              <li class="submenu-list-item">
+                <a class="" href="/logout">Logout</a>
               </li>
             </ul>
           </li>
