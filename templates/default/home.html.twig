@@ -8,6 +8,9 @@
     {% else %}
       <p>Please register to our site</p>
     {% endif %}
+    {% if searchError is defined %}
+      <h3 class="error">You must be logged in to use search. Please Log in</h3>
+    {% endif %}
   </div>
   <div id="loginModal" class="modal">
 

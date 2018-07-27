@@ -110,8 +110,8 @@ class UserController extends Controller {
     $search = $this->request->getParam('search');
 
     if (!isset($user)) {
-      $args['error'] = 'Please log in to use search';
-      echo $this->twig->render('deafault/home.php', $args);
+      $args['searchError'] = 'Please log in to use search';
+      echo $this->twig->render('default/home.html.twig', $args);
     } else {
       $args['results'] = $this->search($search);
 
