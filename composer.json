@@ -3,5 +3,8 @@
     "psr-4": {
       "Site\\":"src/"
     }
+  },
+  "require": {
+    "twig/twig": "^2.0"
   }
 }

@@ -1,17 +1,11 @@
-<?php
-
-?>
 <nav class="navigation navbar navbar-expand-lg navbar-light bg-light">
   <div class="brand">
     <a href="/">Users</a>
   </div>
   <div class="menu container">
     <ul class="">
-      <li class=""><a class="nav-link" href="/register">Register</a></li>            
-      <?php if (!isset($_SESSION['user'])) { ?>
-        <li class=""><a class="nav-link" href="/user" id="loginBtn">Login</a></li>
-      <?php 
-      } else { ?>
+      <li class=""><a class="nav-link" href="/register">Register</a></li>
+      {% if session.user %}
           <li class="">
             <a href="#" id="openSubmenuBtn" class="open-submenu-btn"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
             <ul class="submenu none">
@@ -23,8 +17,9 @@
               </li>
             </ul>
           </li>
-        <?php 
-      } ?>
+      {% else %}
+        <li class=""><a class="nav-link" href="/user" id="loginBtn">Login</a></li>
+      {% endif %}
       <li class="nav-item">
         <form action="/search" method="get" class="form-inline my-2 my-lg-0">
           <input type="text" name="search" id="search" class="form-control mr-sm-2" placeholder="Search">

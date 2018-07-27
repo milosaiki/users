@@ -7,7 +7,7 @@ class PDOConnection
 
   const DB_DSN = 'mysql:host=127.0.0.1;dbname=users';
   const DB_USERNAME = 'root';
-  const DB_PASSWORD = '';
+  const DB_PASSWORD = 'afrahaza';
 
   /**
    * singleton instance

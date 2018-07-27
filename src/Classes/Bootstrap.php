@@ -22,7 +22,7 @@ class Bootstrap
     'update'          => 'user_update'
   ];
 
-  public function __construct($request, $db)
+  public function __construct($request, $db, $twig)
   {
     $uri = empty( $request->getParam(Config::URL_PARAM) ) ? '/' : $request->getParam(Config::URL_PARAM);
     foreach ( $this->routes as $key => $value ) {
@@ -30,7 +30,7 @@ class Bootstrap
         $uriParams = explode('_', $value);
         $this->action = $uriParams[1];
         $controllerClass = '\\Site\\Controller\\' . ucfirst($uriParams[0]) . 'Controller';
-				$this->controller = new $controllerClass($request, $db);
+				$this->controller = new $controllerClass($request, $db, $twig);
         $split = explode('/', $uri);
         $param = isset($split[1]) ? $split[1] : $split[0];
         if ( isset($split[2]) ) {

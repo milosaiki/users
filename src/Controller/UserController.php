@@ -9,9 +9,9 @@ use Site\HelperFunction;
 
 class UserController extends Controller {
 
-  public function __construct($request, $db)
+  public function __construct($request, $db, $twig)
   {
-    parent::__construct($request, $db);
+    parent::__construct($request, $db, $twig);
   }
 
   public function indexAction() 
@@ -21,25 +21,30 @@ class UserController extends Controller {
 
     if ($user) {
       $args['user'] = $user;
-      //$this->view->user = $user;
     }
-    
-    $this->view->render('index.php', $args);
+    echo $this->twig->render('default/home.html.twig', $args);
   }
 
   public function registerAction() 
   {
-    $this->view->render('register.php');
+    $args = [];
+
+    echo $this->twig->render('user/register.html.twig', $args);
   }
 
   public function userAction() 
   {
+    $args = [];
     $user = $this->request->getSessionParam('user');
+
     if ($user) {
-      $this->view->user = $user;
+      $args['user'] =  $user;
+      $tpl = 'user/data.html.twig';
+    } else {
+      $tpl = 'default/home.html.twig';
     }
 
-    $this->view->render('user.php');
+    echo $this->twig->render($tpl, $args);
   }
 
   public function saveAction()
@@ -97,23 +102,21 @@ class UserController extends Controller {
     }
     echo json_encode($args);
     die();
-    //return json_encode($args);
   }
 
   public function searchAction() {
+    $args = [];
     $user = $this->request->getSessionParam('user');
     $search = $this->request->getParam('search');
 
     if (!isset($user)) {
-      $this->view->error = 'Please log in to use search';
-      $this->view->render('user.php');
+      $args['error'] = 'Please log in to use search';
+      echo $this->twig->render('deafault/home.php', $args);
     } else {
+      $args['results'] = $this->search($search);
 
-      $results = $this->search($search);
-
-      $this->view->search = $search;
-      $this->view->results = $results;
-      $this->view->render('search.php');
+      $args['search'] = $search;
+      echo $this->twig->render('default/search.html.twig', $args);
     }
   }
 
@@ -161,13 +164,13 @@ class UserController extends Controller {
     $name = $this->request->postParam('name');
     $email = $this->request->postParam('email');
     $password = md5($this->request->postParam('password'));
-    $id = $this->request->postParam('userId');
+    $id = (int)$this->request->postParam('userId');
 
     $this->updateUser($name, $email, $password, $id);
     $this->request->unsetSessionParam('user');
     $this->request->setSessionParam('user', ['id' => $id, 'name' => $name, 'email' => $email, 'password' => $password]);
 
-    $this->view->redirect('user');
+    $this->redirect('user');
     
   }
 
