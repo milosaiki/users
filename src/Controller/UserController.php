@@ -64,14 +64,14 @@ class UserController extends Controller {
       $res = $User->save($this->db);
 
       if ($res) {
-        $this->view->redirect('user');
+        $this->redirect('user');
       } else {
-        $this->view->error = true;
-        $this->view->render('register.php');
+        $args['error'] = true;
+        $this->twig->render('user/register.html.twig', $args);
       }
     } else {
-      $this->view->error = 'Email address taken';
-      $this->view->render('register.php');
+      $args['error'] = 'Email address taken';
+      $this->twig->render('user/register.html.twig', $args);
     }
     
   }
@@ -79,7 +79,7 @@ class UserController extends Controller {
   public function logoutAction () {
     $this->request->unsetSessionParam('user');
 
-    $this->view->redirect('/');
+    $this->redirect('/');
   }
 
   public function logAction() 
@@ -94,7 +94,7 @@ class UserController extends Controller {
     $User = $this->selectUser($email, $password);
     
     if (!$User) {
-      $this->view->error = 'Wrong email or password';
+      $args['error'] = 'Wrong email or password';
       $args['success'] = -1;
     } else {
       $this->request->setSessionParam('user', $User);
